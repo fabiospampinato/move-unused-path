@@ -30,8 +30,8 @@ function moveUnusedPath ( filePath: string | Buffer, options: Options ): Promise
       }
 
       const loop = tryloop.exponential ({
-        timeout: 10000,
-        tries: 25,
+        timeout: 1500,
+        tries: 20,
         factor: 2,
         minInterval: 1,
         maxInterval: 1000,
