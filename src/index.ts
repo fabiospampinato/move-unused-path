@@ -1,14 +1,14 @@
 
 /* IMPORT */
 
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import getUnusedPath from 'get-unused-path';
 import {Options, Result} from 'get-unused-path/dist/types';
 import tryloop from 'tryloop';
 
 /* MOVE UNUSED PATH */
 
-function moveUnusedPath ( filePath: string | Buffer, options: Options ): Promise<Result> {
+function moveUnusedPath ( filePath: string, options: Options ): Promise<Result> {
 
   return new Promise ( ( resolve, reject ) => {
 
@@ -16,7 +16,7 @@ function moveUnusedPath ( filePath: string | Buffer, options: Options ): Promise
 
       function move () {
         return new Promise ( resolve => {
-          fs.rename ( filePath, result.filePath, err => {
+          fs.move ( filePath, result.filePath, err => {
             if ( err ) return resolve ();
             resolve ( true );
           });
