@@ -5,10 +5,11 @@ import * as fs from 'fs-extra';
 import getUnusedPath from 'get-unused-path';
 import {Options, Result} from 'get-unused-path/dist/types';
 import tryloop from 'tryloop';
+import {ExponentialOptions} from 'tryloop/dist/types';
 
 /* MOVE UNUSED PATH */
 
-function moveUnusedPath ( filePath: string, options: Options ): Promise<Result> {
+function moveUnusedPath ( filePath: string, options: Options, tryloopOptions?: Partial<Omit<ExponentialOptions, 'fn'>> ): Promise<Result> {
 
   return new Promise ( ( resolve, reject ) => {
 
@@ -29,14 +30,16 @@ function moveUnusedPath ( filePath: string, options: Options ): Promise<Result> 
         reject ( new Error ( 'Couldn\'t move to unused path' ) );
       }
 
-      const loop = tryloop.exponential ({
+      const exponentialOptions = Object.assign ({
         timeout: 3000,
         tries: 20,
         factor: 2,
         minInterval: 1,
         maxInterval: 1000,
         fn: move
-      });
+      }, tryloopOptions );
+
+      const loop = tryloop.exponential ( exponentialOptions );
 
       loop.start ().then ( end ).catch ( end );
 
