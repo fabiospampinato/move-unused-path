@@ -49,6 +49,8 @@ function moveUnusedPath ( filePath: string, options: Options, tryloopOptions?: P
 
 }
 
+moveUnusedPath.blacklist = getUnusedPath.blacklist;
+
 /* EXPORT */
 
 export default moveUnusedPath;
