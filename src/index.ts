@@ -3,9 +3,10 @@
 
 import * as fs from 'fs-extra';
 import getUnusedPath from 'get-unused-path';
-import {Options, Result} from 'get-unused-path/dist/types';
+import {Result} from 'get-unused-path/dist/types';
 import tryloop from 'tryloop';
 import {ExponentialOptions} from 'tryloop/dist/types';
+import {Options} from './types';
 
 /* MOVE UNUSED PATH */
 
@@ -25,7 +26,7 @@ function moveUnusedPath ( filePath: string, options: Options, tryloopOptions?: P
       }
 
       function end ( success?: boolean ) {
-        result.dispose ();
+        if ( options.autoDispose !== false ) result.dispose ();
         if ( success === true ) return resolve ( result );
         reject ( new Error ( 'Couldn\'t move to unused path' ) );
       }

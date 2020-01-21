@@ -17,7 +17,15 @@ npm install --save move-unused-path
 
 ## Usage
 
-It accepts the same options object, and returns the same return value, as [get-unused-path](https://github.com/fabiospampinato/get-unused-path).
+It accepts the same options object as [get-unused-path](https://github.com/fabiospampinato/get-unused-path), plus the following options:
+
+```ts
+{
+  autoDispose?: boolean // Automatically dispose once the operation is completed, enabled by default
+}
+```
+
+It also returns the same return value as [get-unused-path](https://github.com/fabiospampinato/get-unused-path).
 
 ```ts
 import * as fs from 'fs';
