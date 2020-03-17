@@ -1,11 +1,11 @@
 
 /* IMPORT */
 
-import * as fs from 'fs-extra';
 import getUnusedPath from 'get-unused-path';
 import {Result} from 'get-unused-path/dist/types';
 import tryloop from 'tryloop';
 import {ExponentialOptions} from 'tryloop/dist/types';
+import {fromCallback as universalify} from 'universalify';
 import {Options} from './types';
 
 /* MOVE UNUSED PATH */
@@ -18,7 +18,8 @@ function moveUnusedPath ( filePath: string, options: Options, tryloopOptions?: P
 
       function move () {
         return new Promise ( resolve => {
-          fs.move ( filePath, result.filePath, err => {
+          const move = universalify ( require ( 'fs-extra/lib/move/move' ) );
+          move ( filePath, result.filePath, err => {
             if ( err ) return resolve ();
             resolve ( true );
           });
