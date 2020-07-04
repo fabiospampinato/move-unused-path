@@ -1,7 +1,7 @@
 {
   "name": "move-unused-path",
   "description": "Reliably move to an unused path.",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
