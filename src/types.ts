@@ -1,9 +1,9 @@
 
 /* IMPORT */
 
-import {Options as BaseOptions} from 'get-unused-path/dist/types';
+import type {Options as BaseOptions, Result} from 'get-unused-path/dist/types';
 
-/* TYPES */
+/* MAIN */
 
 type Options = BaseOptions & {
   autoDispose?: boolean // Automatically dispose once the operation is completed, enabled by default
@@ -11,4 +11,4 @@ type Options = BaseOptions & {
 
 /* EXPORT */
 
-export {Options};
+export type {Options, Result};

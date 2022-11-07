@@ -2,56 +2,32 @@
 /* IMPORT */
 
 import getUnusedPath from 'get-unused-path';
-import {Result} from 'get-unused-path/dist/types';
-import tryloop from 'tryloop';
-import {ExponentialOptions} from 'tryloop/dist/types';
-import {fromCallback as universalify} from 'universalify';
-import {Options} from './types';
+import fs from 'node:fs';
+import type {Options, Result} from './types';
 
-/* MOVE UNUSED PATH */
+/* MAIN */
 
-function moveUnusedPath ( filePath: string, options: Options, tryloopOptions?: Partial<Omit<ExponentialOptions, 'fn'>> ): Promise<Result> {
+const moveUnusedPath = async ( filePath: string, options: Options ): Promise<Result> => {
 
-  return new Promise ( ( resolve, reject ) => {
+  const result = await getUnusedPath ( options );
 
-    getUnusedPath ( options ).then ( result => {
+  try {
 
-      function move () {
-        return new Promise ( resolve => {
-          const move = universalify ( require ( 'fs-extra/lib/move/move' ) );
-          move ( filePath, result.filePath, err => {
-            if ( err ) return resolve ();
-            resolve ( true );
-          });
-        });
-      }
+    await fs.promises.rename ( filePath, result.filePath );
 
-      function end ( success?: boolean ) {
-        if ( options.autoDispose !== false ) result.dispose ();
-        if ( success === true ) return resolve ( result );
-        reject ( new Error ( 'Couldn\'t move to unused path' ) );
-      }
+    return result;
 
-      const exponentialOptions = Object.assign ({
-        timeout: 3000,
-        tries: 20,
-        factor: 2,
-        minInterval: 1,
-        maxInterval: 1000,
-        fn: move
-      }, tryloopOptions );
+  } finally {
 
-      const loop = tryloop.exponential ( exponentialOptions );
+    if ( options.autoDispose !== false ) {
 
-      loop.start ().then ( end ).catch ( end );
+      result.dispose ();
 
-    }).catch ( reject );
+    }
 
-  });
+  }
 
-}
-
-moveUnusedPath.blacklist = getUnusedPath.blacklist;
+};
 
 /* EXPORT */
 
