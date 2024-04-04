@@ -21,7 +21,7 @@
     "path"
   ],
   "dependencies": {
-    "get-unused-path": "^2.0.0"
+    "get-unused-path": "^2.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.4.9",

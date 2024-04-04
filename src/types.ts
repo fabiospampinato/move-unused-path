@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import type {Options as BaseOptions, Result} from 'get-unused-path/dist/types';
+import type {Options as BaseOptions, Result} from 'get-unused-path';
 
 /* MAIN */
 
